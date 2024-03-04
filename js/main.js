@@ -1,66 +1,121 @@
-// Estructura de datos para almacenar gastos e ingresos con detalles
-let transacciones = [];
+const alertsContainer = document.getElementById("alerts");
 
-// Función para agregar gasto o ingreso con detalle
-function agregarTransaccion(tipo) {
-  const monto = parseFloat(prompt(`Ingrese el monto del ${tipo}:`));
-  if (isNaN(monto)) {
-    alert('Por favor, ingrese un monto válido.');
-    return;
-  }
+document.getElementById("addTransactionBtn").addEventListener("click", addTransaction);
 
-  const detalle = prompt(`Ingrese el detalle del ${tipo}:`);
-  
-  // Almacenar la transacción en el array
-  transacciones.push({ tipo, monto, detalle });
+let transactions = [];
+let balance = 0;
 
-  alert(`${tipo} de ${monto} registrado con detalle: ${detalle}`);
-}
-
-// Función para mostrar el estado financiero
-function mostrarEstadoFinanciero() {
-  let gastos = 0;
-  let ingresos = 0;
-
-  // Calcular gastos e ingresos totales
-  transacciones.forEach(transaccion => {
-    if (transaccion.tipo === 'gasto') {
-      gastos += transaccion.monto;
-    } else if (transaccion.tipo === 'ingreso') {
-      ingresos += transaccion.monto;
+document.addEventListener("DOMContentLoaded", function() {
+    const savedTransactions = JSON.parse(localStorage.getItem("transactions"));
+    if (savedTransactions) {
+        transactions = savedTransactions;
+        updateTransactions();
+        calculateBalance();
     }
-  });
+});
 
-  const diferencia = ingresos - gastos;
+function addTransaction() {
+    const amount = parseFloat(document.getElementById("amount").value);
+    const type = document.getElementById("type").value;
+    const detail = document.getElementById("detail").value;
+    
+    if (isNaN(amount) || amount <= 0) {
+        showAlert("Por favor ingresa un monto válido.");
+        return;
+    }
 
-  // Mostrar estado financiero
-  alert(`Gastos totales: ${gastos}\nIngresos totales: ${ingresos}\nDiferencia: ${diferencia}`);
+    if (!detail) {
+        showAlert("Por favor ingresa un detalle para la transacción.");
+        return;
+    }
+    
+    if (type === "gasto") {
+        balance -= amount;
+    } else {
+        balance += amount;
+    }
+
+    transactions.push({ type, detail, amount });
+    updateTransactions();
+    updateBalance();
+    saveTransactions();
+    clearInputs();
 }
 
-// Interfaz básica
-while (true) {
-  const opcion = prompt('Seleccione una opcion:\n1. Agregar gasto\n2. Agregar ingreso\n3. Ver estado financiero\n4. Salir');
-  
-  switch (opcion) {
-    case '1':
-      agregarTransaccion('gasto');
-      break;
-    case '2':
-      agregarTransaccion('ingreso');
-      break;
-    case '3':
-      mostrarEstadoFinanciero();
-      break;
-    case '4':
-      alert('Gracias por usar el simulador.');
-      // A futuro agregar las funciones aca para guardar los datos
-      break;
-    default:
-      alert('Opcion no valida. Por favor, seleccione una opcion valida en base al numero de opcion.');
-      break;
-  }
+function updateTransactions() {
+    const transactionList = document.getElementById("transactionList");
+    transactionList.innerHTML = "";
 
-  if (opcion === '4') {
-    break;
-  }
+    transactions.forEach((transaction, index) => {
+        const div = document.createElement("div");
+        div.classList.add("transaction");
+        div.classList.add(transaction.type === 'gasto' ? 'gasto' : 'ingreso');
+        div.innerHTML = `
+            <p><strong>${transaction.detail}</strong></p>
+            <p>${transaction.type}</p>
+            <p>${transaction.amount}</p>
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+        `;
+        transactionList.appendChild(div);
+
+        const deleteBtn = div.querySelector(".delete-btn");
+        deleteBtn.addEventListener("click", function() {
+            deleteTransaction(index);
+        });
+    });
+}
+
+function updateBalance() {
+    const balanceElement = document.getElementById("balance");
+    balanceElement.textContent = `$ ${balance.toFixed(2)}`;
+    if (balance < 0) {
+        balanceElement.classList.remove("positive");
+        balanceElement.classList.add("negative");
+    } else {
+        balanceElement.classList.remove("negative");
+        balanceElement.classList.add("positive");
+    }
+}
+
+function clearInputs() {
+    document.getElementById("amount").value = "";
+    document.getElementById("detail").value = "";
+}
+
+function deleteTransaction(index) {
+    const deletedTransaction = transactions.splice(index, 1)[0];
+    if (deletedTransaction.type === "ingreso") {
+        balance -= deletedTransaction.amount;
+    } else {
+        balance += deletedTransaction.amount;
+    }
+    updateTransactions();
+    updateBalance();
+    saveTransactions();
+}
+
+function calculateBalance() {
+    balance = 0;
+    transactions.forEach(transaction => {
+        if (transaction.type === "ingreso") {
+            balance += transaction.amount;
+        } else {
+            balance -= transaction.amount;
+        }
+    });
+    updateBalance();
+}
+
+function saveTransactions() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
+function showAlert(message) {
+    const alertDiv = document.createElement("div");
+    alertDiv.classList.add("alert");
+    alertDiv.textContent = message;
+    alertsContainer.appendChild(alertDiv);
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 3000);
 }

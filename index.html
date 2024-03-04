@@ -4,18 +4,162 @@
     <!--JS-->
     <script defer type="text/javascript" src="js/main.js"></script>
 
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/de13fcbf44.js" crossorigin="anonymous"></script>
+
+    <!--CSS (basico)-->
+    <style>
+        h1{
+            padding: 0;
+            margin: 0;
+        }
+
+        .contGen{
+            width: calc(100% - (30px * 2));
+            padding: 0 30px;
+        }
+
+        .contSup{
+            width: 100%;
+            display: grid;
+            grid-template-columns: calc((100% - 200px)) calc(200px);
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            #conteIngreso{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: baseline;
+                flex-direction: column;
+            }
+
+                .formAdd{
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .formAdd div{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0px 10px;
+                }
+
+                .formAdd button{
+                    cursor: pointer;
+                    margin: 10px;
+                }
+
+            #conteBalance{
+                width: 100%;
+                height: 100%;
+                background-color: #e8e8e8;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #addTransactionBtn{
+                background-color: #474747;
+                color: white;
+                padding: 8px 18px;
+                border-radius: 5px;
+                border: none;
+            }
+
+        .transaction {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: calc((100% - 44px) / 3) calc((100% - 44px) / 3) calc((100% - 44px) / 3) calc(44px);
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+        .ingreso {
+            color: green;
+        }
+        .gasto {
+            color: red;
+        }
+        .delete-btn {
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ab270f;
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #balance {
+            font-size: 20px;
+        }
+        .negative {
+            color: red;
+        }
+        .positive {
+            color: green;
+        }
+
+        #alerts {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            background-color: #f6f6f6;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simulador Financiero</title>
 </head>
 <body>
-    <p>
-        Simulador de gastos/ingresos version beta<br><br>
-        Funciones actuales:<br><br>
-        1 | Agregar gasto (monto y detalle)<br>
-        2 | Agragar ingreso (monto y detalle)<br>
-        3 | Ver estado financiero<br>
-        4 | Salir del simulador
-    </p>
+    <div class="contGen">
+        <h1>Simulador Financiero</h1>
+
+        <div class="contSup">
+            <div id="conteIngreso">
+                <h2>¿Que desea ingresar?</h2>
+                <div class="formAdd">
+
+                    <div>
+                        <label for="type">Tipo:</label>
+                        <select id="type">
+                            <option value="ingreso">Ingreso</option>
+                            <option value="gasto">Gasto</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="detail">Detalle:</label>
+                        <input type="text" id="detail">
+                    </div>
+                    
+                    <div>
+                        <label for="amount">Monto:</label>
+                        <input type="number" id="amount">
+                    </div>
+                        
+                    <button id="addTransactionBtn">Agregar</button>
+                </div>
+                
+            </div>
+            <div id="conteBalance">
+                <h2>Balance</h2>
+                <p id="balance">$0</p>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <h2>Detalle de Transacciones</h2>
+        <div id="transactionList"></div>
+    </div>
 </body>
 </html>
