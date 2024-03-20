@@ -1,0 +1,232 @@
+/* INITIAL SETTINGS */
+body{
+    padding: 0;
+    margin: 0;
+    font-family: "regular";
+    clear: both;
+    background-color: rgba(255, 255, 255, 1);
+    color: #7A7A7A;
+}
+
+h1{
+    padding: 16px 0;
+    margin: 0;
+    text-align: center;
+}
+
+h2{
+    margin: 0;
+}
+
+p{
+    margin: 0;
+}
+
+input{
+    padding: 5px 10px;
+}
+
+select{
+    padding: 5px 16px;
+}
+
+/* FONTS */
+.light{
+    font-family: "light";
+}
+
+.regular{
+    font-family: "regular";
+}
+
+.semibold{
+    font-family: "semibold";
+}
+
+.bold{
+    font-family: "bold";
+}
+
+.contGen{
+    width: calc(100% - (30px * 2));
+    padding: 0 30px;
+}
+
+.contSup{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.subt{
+    width: 100%;
+    font-size: 1.3rem;
+    margin: 10px 0;
+    text-align: center;
+}
+
+    #conteIngreso{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        flex-direction: column;
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 15px 0;
+        background-color: #f8f8f8;
+    }
+
+        .formAdd{
+            width: 100%;
+        }
+
+        .formAdd label{
+            font-size: .9rem;
+        }
+
+        .formAdd div.alignElem{
+            width: 100%;
+            display: flex;
+            grid-template-columns: 25% 25% 25% 25%;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 10px;
+        }
+
+        .formAdd div.alignElem div{
+            margin: 0 14px 0 0;
+        }
+
+        .formAdd button{
+            cursor: pointer;
+            margin: 10px;
+        }
+
+    #conteBalance{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+    }
+
+    #conteBalance div.contgen{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-items: flex-start;
+        flex-direction: column;
+    }
+
+    #conteBalance .divisas{
+        width: calc(100% - (10px * 2));
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 10px;
+    }
+
+    #conteBalance .divisas p{
+        background-color: #f0f0f0;
+        text-align: center;
+        padding: 15px;
+        border-radius: 7px;
+    }
+
+    #addTransactionBtn{
+        background-color: #474747;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+    }
+
+.transaction {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: calc((100% - 44px) / 5) calc((100% - 44px) / 5) calc((100% - 44px) / 5) calc((100% - 44px) / 5) calc((100% - 44px) / 5) calc(44px);
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.backtoptransactions{
+    background-color: whitesmoke;
+}
+
+.backtoptransactions div{
+    font-weight: bold;
+    color: #4f4f4f;
+}
+
+.ingreso {
+    color: #2c992c;
+    background-color: #def1de;
+}
+
+.gasto {
+    color: #d53737;
+    background-color: #fcecec;
+}
+
+.delete-btn {
+    width: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #cc5a5a;
+    border: 1px solid #cc5a5a;
+    padding: 15px 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#balance {
+
+}
+
+.negative {
+    color: red;
+}
+.positive {
+    color: green;
+}
+
+#alerts {
+    position: fixed;
+    bottom: 19px;
+    right: 21px;
+    background-color: #fff2e1;
+    border: 2px solid #0000003d;
+    padding: 18px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.alert-ingreso {
+    background-color: #218845 !important;
+    color: white !important;
+}
+
+.alert-gasto {
+    background-color: #e93434 !important;
+    color: white !important;
+}
+
+.alert-remove {
+    background-color: #e93434 !important;
+    color: white !important;
+}
+
+@keyframes popup {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
